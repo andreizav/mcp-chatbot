@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Local LLM (Ollama) — Angular UI</h2>
+  <div class="toolbar">
+    <label>
+      <input
+        type="checkbox"
+        [ngModel]="stream()"
+        (ngModelChange)="stream.set($event)"
+        [ngModelOptions]="{ standalone: true }"
+      > Streaming
+    </label>
+    <button (click)="clear()" [disabled]="loading()">Очистить</button>
+  </div>
+
+  <div class="row" style="margin-top:12px">
+    <div class="col">
+      <textarea [(ngModel)]="prompt" placeholder="Задайте вопрос..."></textarea>
+      <div class="toolbar">
+        <button (click)="send()" [disabled]="loading()">
+          {{ loading() ? 'Отправка…' : 'Отправить' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px">
+    <div *ngFor="let t of history()" class="bubble" [class.user]="t.role==='user'" [class.assistant]="t.role!=='user'">
+      <b>{{ t.role }}</b><br>
+      <div style="white-space:pre-wrap">{{ t.content }}</div>
+    </div>
+  </div>
+</div>
